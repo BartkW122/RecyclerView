@@ -1,7 +1,7 @@
 package com.example.recyclerviewzadanie1;
 
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
+import android.widget.Toast;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -18,7 +18,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         this.userList = userList;
     }
 
-    // Ta metoda tworzy nowy ViewHolder, gdy RecyclerView go potrzebuje.
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -26,22 +25,31 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         return new UserViewHolder(view);
     }
 
-    // Ta metoda wypełnia ViewHolder danymi dla określonej pozycji na liście.
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         User currentUser = userList.get(position);
         holder.firstNameText.setText(currentUser.getFirstName());
         holder.lastNameText.setText(currentUser.getLastName());
-        holder.imageView.setImageDrawable(Drawable.createFromPath("R.drawable."+currentUser.getImageId()));
+
+        int imageResId = holder.itemView.getContext().getResources().getIdentifier(
+                currentUser.getImageId(),
+                "drawable",
+                holder.itemView.getContext().getPackageName()
+        );
+
+        holder.imageView.setImageResource(imageResId);
+
+        holder.imageView.setOnClickListener(v ->{
+            Toast.makeText(
+                    v.getContext(),currentUser.getFirstName() + " " + currentUser.getLastName(), Toast.LENGTH_SHORT).show();
+        });
     }
 
-    // Ta metoda zwraca liczbę elementów na liście.
     @Override
     public int getItemCount() {
         return userList.size();
     }
 
-    // Wewnętrzna klasa ViewHolder przechowuje referencje do widoków wiersza.
     public static class UserViewHolder extends RecyclerView.ViewHolder {
         public TextView firstNameText;
         public TextView lastNameText;

@@ -1,6 +1,7 @@
 package com.example.recyclerviewzadanie1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
@@ -31,6 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
         // 4. Ustaw Adapter i LayoutManager dla RecyclerView
         usersRecyclerView.setAdapter(adapter);
-        usersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        usersRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
     }
 }
